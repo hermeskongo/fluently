@@ -4,7 +4,7 @@ import {and, eq} from "drizzle-orm";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 
-const expireIn = 7 * 24 * 60 * 60
+const expireIn = 7 * 24 * 60 * 60 * 1000
 
 
 /**
@@ -22,7 +22,7 @@ function createTokenAndSetCookie(payload, res) {
 
     res.cookie("jwt", token,{
         maxAge: expireIn,
-        sameSite: "strict",
+        sameSite: process.env.NODE_ENV === "production" ? "strict" : "none",
         httpOnly: true,
         secure: process.env.NODE_ENV === "production"
     })
@@ -90,6 +90,61 @@ export const register = async (req, res) => {
             })
         }
 
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            message: e.message,
+            error: e
+        })
+    }
+
+}
+
+
+// Connexion de l'utilisateur
+export const login = async (req, res) => {
+    const {email, password} = req.body
+
+    if(!email || !password) {
+        return res.status(400).json({
+            success: false,
+            message: "Tous les champs sont requis !"
+        })
+    }
+
+    try {
+
+        // On récupère d'abord l'utilisateur correspond à l'email
+        const user = await db.query.usersTable.findFirst({
+            where: eq(usersTable.email, email)
+        })
+
+        // S'il n'y a pas de user trouvé, on retourne une Response 401 !
+        if(!user) {
+            return res.status(401).json({
+                success: false,
+                message: "Email ou mot de passe incorrect !" // Message volontairement vague
+            })
+        }
+
+        //Sinon, on récupère on compare maintenant le mot de passe Hashé à celui saisi
+            // Si le mot de passe n'est pas correct, on retourne une Response 401
+        if(!bcrypt.compare(password, user.password)) {
+            return res.status(401).json({
+                success: false,
+                message: "Email ou mot de passe incorrect !" // Message volontairement vague
+            })
+        }
+
+        // Sinon Tout est OK
+        // on créer le jwt_token et on l'ajoute aux cookies pour ensuite authentifier l'utilisateur
+        createTokenAndSetCookie(user.id, res)
+
+        // Et on retourne une Response 200
+        return res.json({
+            success: true,
+            message: "Connexion réussie !"
+        })
     } catch (e) {
         return res.status(400).json({
             success: false,
