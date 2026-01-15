@@ -3,6 +3,7 @@ import {usersTable} from "../Config/db/schema.js";
 import {and, eq} from "drizzle-orm";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+import {upsertStreamUser} from "../Config/Stream/streamchat.js";
 
 const expireIn = 7 * 24 * 60 * 60 * 1000
 
@@ -80,6 +81,16 @@ export const register = async (req, res) => {
 
         if(createdUser) {
             // TODO: CREATE USER IN STREAM
+            try {
+                await upsertStreamUser({
+                    id: createdUser.id.toString(),
+                    name: `${createdUser.lastname} ${createdUser.firstname}`,
+                    image: createdUser.picture || ""
+                })
+                console.log("User stream created successfully !")
+            } catch (e) {
+                console.log("Error creating stream user")
+            }
 
             // Authentification immédiate de l'utilisateur dès son inscription
             createTokenAndSetCookie(createdUser.id, res)
