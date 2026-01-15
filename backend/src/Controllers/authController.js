@@ -4,6 +4,7 @@ import {and, eq} from "drizzle-orm";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
 import {upsertStreamUser} from "../Config/Stream/streamchat.js";
+import {getUserWithoutPassword} from "../utils/utils.js";
 
 const expireIn = 7 * 24 * 60 * 60 * 1000
 
@@ -182,6 +183,69 @@ export const getUser = async (req, res) => {
             success: true,
             user: req.user
         })
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            message: e.message,
+            error: e
+        })
+    }
+}
+
+
+// Onboarding de l'utilisateur
+export const onboard = async (req, res) => {
+    const {firstname, lastname, bio, nativeLanguage, learningLanguage, location} = req.body
+    const user = req.user
+
+    if(!bio || !nativeLanguage || !learningLanguage || ! location) {
+        return res.status(400).json({
+            success: false,
+            message: "Tous les champs non préremplis sont requis",
+        })
+    }
+    if (user.isOnboarded) {
+        return res.status(400).json({
+            success: false,
+            message: "Tu es déjà onboarded !",
+        })
+    }
+
+    try {
+        let updatedData = {
+            bio,
+            nativeLanguage,
+            learningLanguage,
+            location,
+            isOnboarded: true,
+            updated_at: new Date()
+        }
+        if(firstname) updatedData.firstname = firstname
+        if(lastname) updatedData.lastname = lastname
+
+        const [updatedUser] = await db.update(usersTable)
+            .set(updatedData)
+            .where(eq(usersTable.id, user.id))
+            .returning()
+
+
+        try {
+            await upsertStreamUser({
+                id: updatedUser.id.toString(),
+                name: `${updatedUser.lastname} ${updatedUser.firstname}`,
+                image: updatedUser.picture || ""
+            })
+            console.log("User stream updated after onboarding successfully !")
+        } catch (e) {
+            console.log("Error updating stream user")
+        }
+
+        return res.json({
+            success: true,
+            message: "Onboarding Successfully !",
+            user: getUserWithoutPassword(updatedUser)
+        })
+
     } catch (e) {
         return res.status(400).json({
             success: false,

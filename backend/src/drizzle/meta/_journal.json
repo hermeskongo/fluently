@@ -15,6 +15,13 @@
       "when": 1768499467417,
       "tag": "0001_classy_crystal",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1768509353295,
+      "tag": "0002_ordinary_doctor_faustus",
+      "breakpoints": true
     }
   ]
 }

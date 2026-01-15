@@ -11,6 +11,7 @@ export const usersTable = pgTable("users", {
     picture: text('picture').default(""),
     nativeLanguage: varchar({length: 25}).default(""),
     learningLanguage: varchar({length: 25}).default(""),
+    location: varchar({length: 30}).default(""),
     isOnboarded: boolean().notNull().default(false),
     ...timestamps
 })
