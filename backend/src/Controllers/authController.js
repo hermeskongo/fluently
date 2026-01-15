@@ -111,7 +111,6 @@ export const register = async (req, res) => {
 
 }
 
-
 // Connexion de l'utilisateur
 export const login = async (req, res) => {
     const {email, password} = req.body
@@ -166,10 +165,28 @@ export const login = async (req, res) => {
 
 }
 
+
+// Déconnexion de l'utilisateur
 export const logout = async (req, res) => {
     res.clearCookie("jwt")
     return res.json({
         success: true,
         message: "Déconnexion réussie !"
     })
+}
+
+// Récupérer les informations de l'utilisateur en ligne
+export const getUser = async (req, res) => {
+    try {
+        return res.json({
+            success: true,
+            user: req.user
+        })
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            message: e.message,
+            error: e
+        })
+    }
 }
