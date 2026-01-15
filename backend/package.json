@@ -1,0 +1,31 @@
+{
+  "name": "fluently-backend",
+  "version": "1.0.0",
+  "description": "Chat application to learn any languages by chatting and speaking with any worlwide user.",
+  "homepage": "https://github.com/hermeskongo/fluently#readme",
+  "bugs": {
+    "url": "https://github.com/hermeskongo/fluently/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hermeskongo/fluently.git"
+  },
+  "license": "ISC",
+  "author": "Hermès KONGO",
+  "type": "module",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "nodemon": "^3.1.11",
+    "stream-chat": "^9.28.0"
+  }
+}
