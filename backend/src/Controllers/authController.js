@@ -154,3 +154,11 @@ export const login = async (req, res) => {
     }
 
 }
+
+export const logout = async (req, res) => {
+    res.clearCookie("jwt")
+    return res.json({
+        success: true,
+        message: "Déconnexion réussie !"
+    })
+}
