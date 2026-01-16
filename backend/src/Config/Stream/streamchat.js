@@ -1,5 +1,6 @@
 import "dotenv/config"
 import {StreamChat} from "stream-chat";
+import * as stream from "stream";
 
 const apiKey = process.env.STREAM_API_KEY
 const apiSecret = process.env.STREAM_API_SECRET
@@ -17,5 +18,14 @@ export async function upsertStreamUser(userData) {
         await StreamClient.upsertUsers([userData])
     } catch (e) {
         console.error("Erreur upserting stream user",e)
+    }
+}
+
+
+export function createStreamToken(userId) {
+    try {
+        return StreamClient.createToken(userId)
+    } catch (e) {
+        console.error("Error generating stream token", e)
     }
 }
