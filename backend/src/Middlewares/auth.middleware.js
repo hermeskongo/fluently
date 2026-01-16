@@ -30,7 +30,11 @@ export const isAuthenticated = async (req, res, next) => {
     }
 }
 
-// Algorithme du Middleware:
+export const isOnboarded = (req, res, next) => {
+    return req?.user?.isOnboarded ? next() : res.status(400).json({success: false, message: "Il faut être onboarded pour effectuer cette opération !"})
+}
+
+// Algorithme du Middleware isAuthenticated:
     // Récupérer le token dans le cookie
         // S'il n'existe pas, erreur
         // Sinon, on poursuit
