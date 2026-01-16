@@ -1,0 +1,1 @@
+ALTER TABLE "users" RENAME COLUMN "isOnboarded" TO "is_onboarded";

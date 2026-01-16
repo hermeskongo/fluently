@@ -19,7 +19,7 @@ export const usersTable = pgTable("users", {
     nativeLanguage: varchar('native_language', {length: 25}).default(""),
     learningLanguage: varchar('learning_language',{length: 25}).default(""),
     location: varchar({length: 30}).default(""),
-    isOnboarded: boolean().notNull().default(false),
+    isOnboarded: boolean('is_onboarded').notNull().default(false),
     ...timestamps
 })
 
