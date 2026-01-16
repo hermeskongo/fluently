@@ -214,3 +214,63 @@ export const getMyFriends = async (req, res) => {
         })
     }
 }
+
+export const getFriendRequests = async (req, res) => {
+    const user = req.user
+
+    try {
+        const requests = await db.query.friendshipsTable.findMany({
+            where:(table, {and, or, eq}) => and(
+                    or(eq(table.user_id, user.id), eq(table.friend_id, user.id)),
+                    or(eq(table.status, 'accepted'), eq(table.status, 'pending'))
+                ),
+            with: {
+                friend: {
+                    columns: {
+                        password: false
+                    }
+                }
+            }
+        })
+
+        return res.json({
+            success: true,
+            requests
+        })
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            error: e
+        })
+    }
+}
+
+export const getOutGoingFriendRequests = async (req, res) => {
+    const user = req.user
+
+    try {
+        const requests = await db.query.friendshipsTable.findMany({
+            where: and(eq(friendshipsTable.user_id, user.id), eq(friendshipsTable.status, "pending")),
+            with: {
+                friend: {
+                    columns: {
+                        password: false
+                    }
+                }
+            }
+        })
+
+
+        return res.json({
+            success: true,
+            requests
+        })
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            message: e.message,
+            error: e
+        })
+    }
+
+}

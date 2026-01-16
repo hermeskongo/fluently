@@ -1,8 +1,8 @@
 import express from "express";
 import {isAuthenticated, isOnboarded} from "../Middlewares/auth.middleware.js";
 import {
-    acceptFriendRequest,
-    getMyFriends,
+    acceptFriendRequest, getFriendRequests,
+    getMyFriends, getOutGoingFriendRequests,
     getRecommendedFriends,
     sendFriendRequest
 } from "../Controllers/users.controller.js";
@@ -13,3 +13,5 @@ userRoutes.get('/getRecommendedFriends', isAuthenticated, isOnboarded, getRecomm
 userRoutes.post('/sendFriendRequest', isAuthenticated, isOnboarded, sendFriendRequest)
 userRoutes.get('/myFriends', isAuthenticated, isOnboarded, getMyFriends)
 userRoutes.post('/acceptFriendRequest', isAuthenticated, acceptFriendRequest)
+userRoutes.get('/getFriendRequests', isAuthenticated, getFriendRequests)
+userRoutes.get('/getOutGoingFriendRequests', isAuthenticated, getOutGoingFriendRequests)
