@@ -57,6 +57,12 @@ export const sendFriendRequest = async (req, res) => {
             message: "Tous les champs sont requis"
         })
     }
+    if(friend_id === user.id) {
+        return res.status(400).json({
+            success: false,
+            message: "Vous ne pouvez pas vous envoyez une requête à vous même"
+        })
+    }
 
     try {
         const friend = await db.query.usersTable.findFirst({
@@ -119,4 +125,36 @@ export const sendFriendRequest = async (req, res) => {
         })
     }
 
+}
+
+export const getMyFriends = async (req, res) => {
+    const user = req.user
+    try {
+        const friends = await db.query.friendshipsTable.findMany({
+            where:(table, {and, or, eq}) => and(
+                or(
+                    eq(table.friend_id, user.id),
+                    eq(table.user_id, user.id)
+                ),
+                eq(table.status, 'accepted')
+            ),
+
+        })
+        if(!friends) {
+            return res.status(404).json({
+                success: false,
+                message: "Vous n'avez aucun amis :("
+            })
+        }
+        return res.json({
+            success: true,
+            friends
+        })
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            error: e,
+            message: e.message
+        })
+    }
 }
