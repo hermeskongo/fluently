@@ -127,6 +127,62 @@ export const sendFriendRequest = async (req, res) => {
 
 }
 
+export const acceptFriendRequest = async(req, res) => {
+    const {friendshipId} = req.body
+    const user = req.user
+
+    if(!friendshipId) {
+        return res.status(400).json({
+            success: false,
+            message: "Ce lien n'existe pas dans notre base de données"
+        })
+    }
+
+    try {
+        const friendship = await db.query.friendshipsTable.findFirst({
+            where: eq(friendshipsTable.id, friendshipId)
+        })
+
+        if (!friendship) {
+            throw new Error('Demande introuvable');
+        }
+
+        // Vérifier que c'est bien le destinataire qui accepte
+        if (friendship.friend_id !== user.id) {
+            throw new Error('Non autorisé');
+        }
+
+        // Vérifier que le statut est "pending"
+        if (friendship.status !== 'pending') {
+            throw new Error('La demande n\'est plus en attente');
+        }
+
+        // Accepter la demande
+        const [updatedFriendship] = await db
+            .update(friendshipsTable)
+            .set({
+                status: 'accepted',
+                accepted_at: new Date()
+            })
+            .where(eq(friendshipsTable.id, friendshipId))
+            .returning();
+
+        return res.status(200).json({
+            success: false,
+            message: `✅ Demande acceptée: ${friendshipId}`,
+            updatedFriendship
+        })
+
+
+    } catch (e) {
+        return res.status(400).json({
+            success: false,
+            message: e.message
+        })
+    }
+
+}
+
 export const getMyFriends = async (req, res) => {
     const user = req.user
     try {
