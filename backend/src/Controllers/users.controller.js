@@ -9,6 +9,14 @@ export const getRecommendedFriends = async (req, res) => {
     const userId = user.id
 
     try {
+
+        // Ecriture de code SQL directement, plus fiable, plus lisible et plus facile à maintenir !
+        // 1.Récupérer les infos du friend
+            // Tant que ce n'est pas nous même
+            // Tant que il est onboarded
+
+            // 2.Sous requête pour être sur qu'il n'existe aucune relation amicales avec les users à proposer
+
         const recommendedFriendsQuery = await db.execute(sql`
         SELECT u.id, u.lastname, u.firstname, u.email, u.picture, u.native_language, u.learning_language, u.location, u.is_onboarded
         FROM users u
