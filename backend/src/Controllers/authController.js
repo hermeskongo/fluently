@@ -181,7 +181,10 @@ export const getUser = async (req, res) => {
     try {
         return res.json({
             success: true,
-            user: req.user
+            user: {
+                fullname: `${req.user.firstname} ${req.user.lastname}`,
+                ...req.user
+            }
         })
     } catch (e) {
         return res.status(400).json({

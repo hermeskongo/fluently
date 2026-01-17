@@ -1,6 +1,5 @@
-import {axiosInstance} from "../lib/axios.js";
-import {API_PATHS, getAuthUser} from "../lib/api.js";
-import {useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { getAuthUser } from "../lib/api.js";
 
 export const useAuth = () => {
 
@@ -9,5 +8,6 @@ export const useAuth = () => {
         queryFn: getAuthUser,
         retry: false
     })
+    console.log(authData?.user)
     return {authUser: authData?.user, isLoading, error}
 }

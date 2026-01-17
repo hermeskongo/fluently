@@ -38,9 +38,19 @@ export const login =  async (data) => {
     return response.data
 }
 
+export const logout =  async () => {
+    const response = await axiosInstance.post(API_PATHS.AUTH.LOGOUT)
+    return response.data
+}
+
 export const getAuthUser = async () => {
-    const res = await axiosInstance.get(API_PATHS.AUTH.GET_USER)
-    return res.data
+    try {
+        const res = await axiosInstance.get(API_PATHS.AUTH.GET_USER)
+        return res.data
+    } catch (error) {
+        console.log("Error on getting user")
+        return null
+    }
 }
 
 export const onboardUser = async (data) => {
