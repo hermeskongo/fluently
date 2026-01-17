@@ -7,7 +7,7 @@ import {ChatPage} from "./pages/ChatPage.jsx";
 import {CallPage} from "./pages/CallPage.jsx";
 import {useQuery} from "@tanstack/react-query";
 import {axiosInstance} from "./lib/axios.js";
-import {API_PATHS} from "./lib/constant.js";
+import {API_PATHS} from "./lib/api.js";
 
 export const  App = () => {
 
@@ -15,7 +15,6 @@ export const  App = () => {
     queryKey: ["authUser"],
     queryFn: async () => {
       const res = await axiosInstance.get(API_PATHS.AUTH.GET_USER)
-
       return res.data
     },
     retry: false
