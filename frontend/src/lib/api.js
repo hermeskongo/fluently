@@ -25,9 +25,16 @@ export const API_PATHS = {
 }
 
 
-// Mutation for our differents endpoints in order to use it with React-Query
+//============= Mutation for our differents endpoints in order to use it with React-Query================
+
+
 export const signup =  async (signUpData) => {
     const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, signUpData)
+    return response.data
+}
+
+export const login =  async (data) => {
+    const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, data)
     return response.data
 }
 
