@@ -9,10 +9,13 @@ import { HomePage } from "./pages/HomePage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { OnboardingPage } from "./pages/OnboardingPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
+import { useThemeStore } from './store/useThemeStore.jsx';
 
 export const  App = () => {
 
   const {authUser, isLoading, error} = useAuth()
+
+  const { theme } = useThemeStore()
 
   const isAuthenticated = Boolean(authUser)
   const isOnboarded = authUser?.isOnboarded
@@ -20,7 +23,7 @@ export const  App = () => {
   if(isLoading) return <PageLoader/>
 
   return (
-    <div className="h-screen font-sans" data-theme="forest">
+    <div className="h-screen font-sans" data-theme={theme}>
       <Routes>
         <Route path="/" element={isAuthenticated && isOnboarded ? (
             <GlobalLayout showSidebar={true}>
