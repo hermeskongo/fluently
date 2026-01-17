@@ -1,15 +1,17 @@
-import {axiosInstance} from "./axios.js";
+import { axiosInstance } from "./axios.js";
 
 export const BACKEND_BASE_URL = 'http://localhost:5001/api/v1'
 
 const auth_base = "/auth"
 const users_base = "/users"
 
+// Constant for simplify and scalability API CALL
 export const API_PATHS = {
     AUTH: {
         LOGIN: `${auth_base}/login`,
         REGISTER: `${auth_base}/register`,
         GET_USER: `${auth_base}/getUser`,
+        ONBOARD: `${auth_base}/onboard`,
         LOGOUT: `${auth_base}/logout`
     },
     USERS: {
@@ -23,6 +25,7 @@ export const API_PATHS = {
 }
 
 
+// Mutation for our differents endpoints in order to use it with React-Query
 export const signup =  async (signUpData) => {
     const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, signUpData)
     return response.data
@@ -30,5 +33,10 @@ export const signup =  async (signUpData) => {
 
 export const getAuthUser = async () => {
     const res = await axiosInstance.get(API_PATHS.AUTH.GET_USER)
+    return res.data
+}
+
+export const onboardUser = async (data) => {
+    const res = await axiosInstance.post(API_PATHS.AUTH.ONBOARD, data)
     return res.data
 }

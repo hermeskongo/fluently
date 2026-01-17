@@ -3,7 +3,7 @@ import { Globe } from "lucide-react";
 import { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Input } from '../components/Form/Input';
-import {signup} from "../lib/api.js";
+import { signup } from "../lib/api.js";
 
 export default function SignUpPage() {
   const [signUpData, setSignUpData] = useState({
@@ -74,7 +74,6 @@ export default function SignUpPage() {
               <button 
                 type="submit"
                 className='btn btn-primary w-full my-2'
-                onSubmit={() => console.log("Submit")}
                 disabled={isPending}
               >{isPending ?
                   ( <> <span className="loading loading-spinner loading-xs"></span> Loading... </> )
