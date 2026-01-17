@@ -24,7 +24,7 @@ function createTokenAndSetCookie(payload, res) {
 
     res.cookie("jwt", token,{
         maxAge: expireIn,
-        sameSite: process.env.NODE_ENV === "production" ? "strict" : "none",
+        sameSite: process.env.NODE_ENV === "production" ? "strict" : "lax",
         httpOnly: true,
         secure: process.env.NODE_ENV === "production"
     })
@@ -44,7 +44,7 @@ export const register = async (req, res) => {
     if(password.length<6) {
         return res.status(400).json({
             success: false,
-            message: "Le mot de passe doit contenir 6 caractères."
+            message: "Le mot de passe doit contenir au moins 6 caractères."
         })
     }
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -81,17 +81,17 @@ export const register = async (req, res) => {
             }).returning()
 
         if(createdUser) {
-            // TODO: CREATE USER IN STREAM
-            try {
-                await upsertStreamUser({
-                    id: createdUser.id.toString(),
-                    name: `${createdUser.lastname} ${createdUser.firstname}`,
-                    image: createdUser.picture || ""
-                })
-                console.log("User stream created successfully !")
-            } catch (e) {
-                console.log("Error creating stream user")
-            }
+        //     // TODO: CREATE USER IN STREAM
+        //     try {
+        //         await upsertStreamUser({
+        //             id: createdUser.id.toString(),
+        //             name: `${createdUser.lastname} ${createdUser.firstname}`,
+        //             image: createdUser.picture || ""
+        //         })
+        //         console.log("User stream created successfully !")
+        //     } catch (e) {
+        //         console.log("Error creating stream user")
+        //     }
 
             // Authentification immédiate de l'utilisateur dès son inscription
             createTokenAndSetCookie(createdUser.id, res)

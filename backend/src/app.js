@@ -4,7 +4,6 @@ import {testDrizzle} from "./Config/db/drizzle.js";
 import {authRoutes} from "./Routes/auth.routes.js";
 import cookieParser from "cookie-parser"
 import {userRoutes} from "./Routes/user.routes.js";
-import {chatCodes} from "stream-chat";
 import {chatRoutes} from "./Routes/chat.routes.js";
 import cors from "cors"
 
@@ -14,7 +13,8 @@ const port = process.env.PORT
 
 testDrizzle()
 
-app.use(express.json())
+app
+    .use(express.urlencoded({extended: true}))
     .use(cookieParser())
     .use(cors({
         origin: [
@@ -25,7 +25,9 @@ app.use(express.json())
         credentials: true
     }))
 
-app.use('/api/v1/auth', authRoutes)
+app
+    .use(express.json())
+    .use('/api/v1/auth', authRoutes)
     .use('/api/v1/users', userRoutes)
     .use('/api/v1/chat', chatRoutes)
 
