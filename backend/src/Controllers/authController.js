@@ -1,10 +1,10 @@
-import {db} from "../Config/db/drizzle.js";
-import {usersTable} from "../Config/db/schema.js";
-import {and, eq} from "drizzle-orm";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken"
-import {upsertStreamUser} from "../Config/Stream/streamchat.js";
-import {getUserWithoutPassword} from "../utils/utils.js";
+import { eq } from "drizzle-orm";
+import jwt from "jsonwebtoken";
+import { db } from "../Config/db/drizzle.js";
+import { usersTable } from "../Config/db/schema.js";
+import { upsertStreamUser } from "../Config/Stream/streamchat.js";
+import { getUserWithoutPassword } from "../utils/utils.js";
 
 const expireIn = 7 * 24 * 60 * 60 * 1000
 
@@ -195,10 +195,10 @@ export const getUser = async (req, res) => {
 
 // Onboarding de l'utilisateur
 export const onboard = async (req, res) => {
-    const {firstname, lastname, bio, nativeLanguage, learningLanguage, location} = req.body
+    const {firstname, lastname, bio, nativeLanguage, learningLanguage, location, picture} = req.body
     const user = req.user
 
-    if(!bio || !nativeLanguage || !learningLanguage || ! location) {
+    if(!bio || !nativeLanguage || !learningLanguage || ! location || !picture) {
         return res.status(400).json({
             success: false,
             message: "Tous les champs non préremplis sont requis",
@@ -217,6 +217,7 @@ export const onboard = async (req, res) => {
             nativeLanguage,
             learningLanguage,
             location,
+            picture,
             isOnboarded: true,
             updated_at: new Date()
         }
