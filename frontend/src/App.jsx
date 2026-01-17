@@ -33,7 +33,7 @@ export const  App = () => {
         <Route path="/onboarding" element={isAuthenticated && !isOnboarded ? (
             <OnboardingPage/>
             ) : (
-                <Navigate to={isOnboarded ? "/home" : "/login"}/>
+                <Navigate to={isOnboarded ? "/" : "/login"}/>
         )}/>
 
         <Route path="/chat" element={isAuthenticated ? <ChatPage/> : <Navigate to="/login"/>}/>
