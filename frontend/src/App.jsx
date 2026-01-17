@@ -1,13 +1,14 @@
-import {Navigate, Route, Routes} from "react-router-dom";
-import {HomePage} from "./pages/HomePage.jsx";
+import { useQuery } from "@tanstack/react-query";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { PageLoader } from './components/UI/PageLoader.jsx';
+import { API_PATHS } from "./lib/api.js";
+import { axiosInstance } from "./lib/axios.js";
+import { CallPage } from "./pages/CallPage.jsx";
+import { ChatPage } from "./pages/ChatPage.jsx";
+import { HomePage } from "./pages/HomePage.jsx";
+import { LoginPage } from "./pages/LoginPage.jsx";
+import { OnboardingPage } from "./pages/OnboardingPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
-import {LoginPage} from "./pages/LoginPage.jsx";
-import {OnboardingPage} from "./pages/OnboardingPage.jsx";
-import {ChatPage} from "./pages/ChatPage.jsx";
-import {CallPage} from "./pages/CallPage.jsx";
-import {useQuery} from "@tanstack/react-query";
-import {axiosInstance} from "./lib/axios.js";
-import {API_PATHS} from "./lib/api.js";
 
 export const  App = () => {
 
@@ -21,6 +22,9 @@ export const  App = () => {
   })
 
   const authUser = authData?.user
+  
+
+  if(isLoading) return <PageLoader/>
 
   return (
     <div className="h-screen font-sans" data-theme="night">
