@@ -27,3 +27,8 @@ export const signup =  async (signUpData) => {
     const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, signUpData)
     return response.data
 }
+
+export const getAuthUser = async () => {
+    const res = await axiosInstance.get(API_PATHS.AUTH.GET_USER)
+    return res.data
+}
