@@ -77,3 +77,23 @@ export const sendFriendRequest = async (user_id) => {
     const res = await axiosInstance.post(API_PATHS.USERS.SEND_FRIEND_REQUEST, {friend_id: user_id})
     return res.data
 }
+
+export const getFriendRequests = async () => {
+    try {    
+        const res = await axiosInstance.get(API_PATHS.USERS.GET_FRIEND_REQUESTS)
+        return res.data
+    } catch (error) {
+        console.log("Error query get my friends requests")
+        return null
+    }
+}
+
+export const acceptFriendRequest = async (friendshipId) => {
+    try {    
+        const res = await axiosInstance.put(API_PATHS.USERS.ACCEPT_FRIEND_REQUEST, {friendshipId})
+        return res.data?.friends
+    } catch (error) {
+        console.log("Error mutation accept friend request")
+        return null
+    }
+}

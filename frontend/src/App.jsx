@@ -7,6 +7,7 @@ import { CallPage } from "./pages/CallPage.jsx";
 import { ChatPage } from "./pages/ChatPage.jsx";
 import { HomePage } from "./pages/HomePage.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
+import { NotificationsPage } from './pages/NotificationsPage.jsx';
 import { OnboardingPage } from "./pages/OnboardingPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import { useThemeStore } from './store/useThemeStore.jsx';
@@ -42,11 +43,17 @@ export const  App = () => {
                 <Navigate to={isOnboarded ? "/" : "/login"}/>
         )}/>
 
-        <Route path="/chat" element={isAuthenticated ? 
+        <Route path="/notifications" element={isAuthenticated && isOnboarded ? (
             <GlobalLayout showSidebar={true}>
-              <ChatPage/>
-            </GlobalLayout> : <Navigate to="/login"/>}/>
+              <NotificationsPage/>
+            </GlobalLayout>
+          ) :  ( 
+            <Navigate to={!isOnboarded ? "/onboarding" : "/login"}/>
+          )
+        }/>
+
         <Route path="/call" element={isAuthenticated ? <CallPage/> : <Navigate to="/login"/>}/>
+        <Route path="/chat" element={isAuthenticated ? <ChatPage/> : <Navigate to="/login"/>}/>
       </Routes>
 
       
