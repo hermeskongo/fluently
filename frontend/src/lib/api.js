@@ -1,6 +1,5 @@
 import { axiosInstance } from "./axios.js";
 
-export const BACKEND_BASE_URL = 'http://localhost:5001/api/v1'
 
 const auth_base = "/auth"
 const users_base = "/users"
