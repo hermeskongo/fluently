@@ -20,6 +20,7 @@ app
         origin: [
             "http://localhost:5174",
             "http://localhost:5173",
+            "https://wild-paths-smash.loca.lt"
         ],
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true

@@ -60,8 +60,15 @@ export const  App = () => {
             <Navigate to={!isOnboarded ? "/onboarding" : "/login"}/>
           )
         }/>
-
-        <Route path="/call" element={isAuthenticated ? <CallPage/> : <Navigate to="/login"/>}/>
+        
+        <Route path="/call/:id/:chatId" element={isAuthenticated && isOnboarded ? (
+            <GlobalLayout showSidebar={false}>
+              <CallPage/>
+            </GlobalLayout>
+          ) :  ( 
+            <Navigate to={!isOnboarded ? "/onboarding" : "/login"}/>
+          )
+        }/>
       </Routes>
 
       

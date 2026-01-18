@@ -12,6 +12,7 @@ import {
   Thread,
   Window,
 } from "stream-chat-react"
+import { CallButton } from '../components/Chat/CallButton'
 import ChatLoader from '../components/Chat/ChatLoader'
 import { useAuth } from '../hooks/useAuth'
 import { getStreamToken } from '../lib/api'
@@ -64,11 +65,9 @@ export const ChatPage = () => {
         }, token)
 
         const channelId = generateChannelId(authUser?.id, tardgetUserId)
-
         const currChannel = client.channel("messaging", channelId, {
           members: [authUser?.id, tardgetUserId]
         })
-        console.log(channelId)
 
         await currChannel.watch()
 
@@ -90,7 +89,17 @@ export const ChatPage = () => {
 
   }, [token, authUser, tardgetUserId])
 
-  //console.log(channel, tokenData)
+
+  async function handleVideoCall() {
+    if (channel) {
+      const callUrl = `${window.location.origin}/call/${channel.id}/${tardgetUserId}`
+      channel.sendMessage({
+        text: `Rejoins moi pour un appel vidéo en cliquant sur ce lien !: ${callUrl}`
+      })
+      toast.success("Lien d'appel créé avec succès !🎉")
+    }
+
+  }
 
   if (loading || !chatClient || !channel) return <ChatLoader />
 
@@ -99,11 +108,11 @@ export const ChatPage = () => {
       <Chat client={chatClient}>
         <Channel channel={channel}>
           <div className="w-full relative">
-            {/*<CallButton handleVideoCall={handleVideoCall} />*/}
+            <CallButton handleVideoCall={handleVideoCall} />
             <Window>
               <ChannelHeader />
               <MessageList />
-              <MessageInput focus AudioRecoder={true}/>
+              <MessageInput focus AudioRecoder={true} />
             </Window>
           </div>
           <Thread />

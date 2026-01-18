@@ -102,7 +102,7 @@ export const NotificationsPage = () => {
                     return (
                     <div key={notification.id} className="card bg-base-200 shadow-sm">
                       <div className="card-body p-4">
-                        <div className="flex items-start gap-3">
+                        <div className="flex flex-col sm:flex-row items-start gap-3">
                           <div className="avatar mt-1 size-10 rounded-full">
                             <img
                               src={iAmUser ? notification?.friend?.picture : notification?.user?.picture}
