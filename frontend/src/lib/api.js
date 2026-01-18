@@ -4,6 +4,7 @@ export const BACKEND_BASE_URL = 'http://localhost:5001/api/v1'
 
 const auth_base = "/auth"
 const users_base = "/users"
+const chat_base = "/chat"
 
 // Constant for simplify and scalability API CALL
 export const API_PATHS = {
@@ -21,6 +22,9 @@ export const API_PATHS = {
         MY_FRIENDS: `${users_base}/myFriends`,
         GET_FRIEND_REQUESTS: `${users_base}/getFriendRequests`,
         GET_OUT_GOING_FRIEND_REQUESTS: `${users_base}/getOutGoingFriendRequests`,
+    },
+    CHAT: {
+        GET_STREAM_TOKEN: `${chat_base}/token`
     }
 }
 
@@ -94,6 +98,18 @@ export const acceptFriendRequest = async (friendshipId) => {
         return res.data?.friends
     } catch (error) {
         console.log("Error mutation accept friend request")
+        return null
+    }
+}
+
+
+
+export const getStreamToken = async () => {
+    try {    
+        const res = await axiosInstance.get(API_PATHS.CHAT.GET_STREAM_TOKEN)
+        return res.data
+    } catch (error) {
+        console.log("Error query: get stream token")
         return null
     }
 }
