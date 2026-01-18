@@ -12,10 +12,10 @@ export const getRecommendedFriends = async (req, res) => {
 
         // Ecriture de code SQL directement, plus fiable, plus lisible et plus facile à maintenir !
         // 1.Récupérer les infos du friend
-            // Tant que ce n'est pas nous même
-            // Tant que il est onboarded
+        // Tant que ce n'est pas nous même
+        // Tant que il est onboarded
 
-            // 2.Sous requête pour être sur qu'il n'existe aucune relation amicales avec les users à proposer
+        // 2.Sous requête pour être sur qu'il n'existe aucune relation amicales avec les users à proposer
 
         const recommendedFriendsQuery = await db.execute(sql`
         SELECT u.id, u.lastname, u.firstname, u.email, u.picture, u.native_language, u.learning_language, u.location, u.is_onboarded
@@ -36,7 +36,7 @@ export const getRecommendedFriends = async (req, res) => {
     `)
         const recommendedFriends = recommendedFriendsQuery.rows
 
-        if(!recommendedFriends) {
+        if (!recommendedFriends) {
             return res.status(400).json({
                 success: false,
                 message: "Aucune recommandations disponibles"
@@ -56,16 +56,16 @@ export const getRecommendedFriends = async (req, res) => {
 }
 
 export const sendFriendRequest = async (req, res) => {
-    const {friend_id} = req.body
+    const { friend_id } = req.body
     const user = req.user
 
-    if(!user.id || !friend_id) {
+    if (!user.id || !friend_id) {
         return res.status(400).json({
             success: false,
             message: "Tous les champs sont requis"
         })
     }
-    if(friend_id === user.id) {
+    if (friend_id === user.id) {
         return res.status(400).json({
             success: false,
             message: "Vous ne pouvez pas vous envoyez une requête à vous même"
@@ -92,7 +92,7 @@ export const sendFriendRequest = async (req, res) => {
             )
         })
 
-        if(friendship) {
+        if (friendship) {
             switch (friendship.status) {
                 case "pending":
                     return res.status(400).json({
@@ -135,11 +135,11 @@ export const sendFriendRequest = async (req, res) => {
 
 }
 
-export const acceptFriendRequest = async(req, res) => {
-    const {friendshipId} = req.body
+export const acceptFriendRequest = async (req, res) => {
+    const { friendshipId } = req.body
     const user = req.user
 
-    if(!friendshipId) {
+    if (!friendshipId) {
         return res.status(400).json({
             success: false,
             message: "Ce lien n'existe pas dans notre base de données"
@@ -194,8 +194,8 @@ export const acceptFriendRequest = async(req, res) => {
 export const getMyFriends = async (req, res) => {
     const user = req.user
     try {
-        const friends = await db.query.friendshipsTable.findMany({
-            where:(table, {and, or, eq}) => and(
+        const friendships = await db.query.friendshipsTable.findMany({
+            where: (table, { and, or, eq }) => and(
                 or(
                     eq(table.friend_id, user.id),
                     eq(table.user_id, user.id)
@@ -204,15 +204,29 @@ export const getMyFriends = async (req, res) => {
             ),
 
         })
-        if(!friends) {
+        if (!friendships) {
             return res.status(404).json({
                 success: false,
                 message: "Vous n'avez aucun amis :("
             })
         }
+
+        const friendsPromises = friendships.map(async (friendship) => {
+            const friendId = user.id === friendship.user_id ? friendship.friend_id : friendship.user_id;
+
+            return await db.query.usersTable.findFirst({
+                where: (users, { eq }) => eq(users.id, friendId),
+                columns: { password: false }
+            });
+        });
+
+        // 2. On attend la résolution de TOUTES les promesses
+        const friends = await Promise.all(friendsPromises);
+
         return res.json({
             success: true,
-            friends
+            friends,
+            friendships
         })
     } catch (e) {
         return res.status(400).json({
@@ -228,21 +242,31 @@ export const getFriendRequests = async (req, res) => {
 
     try {
         const requests = await db.query.friendshipsTable.findMany({
-            where:(table, {and, or, eq}) => and(
-                    or(eq(table.user_id, user.id), eq(table.friend_id, user.id)),
-                    or(eq(table.status, 'accepted'), eq(table.status, 'pending'))
-                ),
+            where: (table, { and, or, eq }) => and(
+                or(eq(table.user_id, user.id), eq(table.friend_id, user.id)),
+                or(eq(table.status, 'accepted'), eq(table.status, 'pending'))
+            ),
             with: {
                 friend: {
                     columns: {
                         password: false
                     }
+                },
+                user: {
+                    columns: {
+                        password: false
+                    }
                 }
-            }
+            },
+            orderBy: (table, {desc}) => [desc(table.accepted_at)]
         })
+        const incomingReqs = requests.filter(req => req.status === 'pending')
+        const acceptedReqs = requests.filter(req => req.status === 'accepted')
 
         return res.json({
             success: true,
+            incomingReqs,
+            acceptedReqs,
             requests
         })
     } catch (e) {
