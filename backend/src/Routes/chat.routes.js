@@ -4,4 +4,4 @@ import {isAuthenticated, isOnboarded} from "../Middlewares/auth.middleware.js";
 
 export const chatRoutes = express.Router()
 
-chatRoutes.get('/token', isAuthenticated, isOnboarded, getStreamToken)
+chatRoutes.get('/token', isAuthenticated, isOnboarded,getStreamToken)

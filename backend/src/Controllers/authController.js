@@ -82,16 +82,16 @@ export const register = async (req, res) => {
 
         if(createdUser) {
         //     // TODO: CREATE USER IN STREAM
-        //     try {
-        //         await upsertStreamUser({
-        //             id: createdUser.id.toString(),
-        //             name: `${createdUser.lastname} ${createdUser.firstname}`,
-        //             image: createdUser.picture || ""
-        //         })
-        //         console.log("User stream created successfully !")
-        //     } catch (e) {
-        //         console.log("Error creating stream user")
-        //     }
+            try {
+                await upsertStreamUser({
+                    id: createdUser.id.toString(),
+                    name: `${createdUser.lastname} ${createdUser.firstname}`,
+                    image: createdUser.picture || ""
+                })
+                console.log("User stream created successfully !")
+            } catch (e) {
+                console.log("Error creating stream user")
+            }
 
             // Authentification immédiate de l'utilisateur dès son inscription
             createTokenAndSetCookie(createdUser.id, res)
