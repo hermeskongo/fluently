@@ -1,6 +1,6 @@
-import {db} from "../Config/db/drizzle.js";
-import {and, eq, or, sql} from "drizzle-orm";
-import {friendshipsTable, usersTable} from "../Config/db/schema.js";
+import { and, eq, or, sql } from "drizzle-orm";
+import { db } from "../Config/db/drizzle.js";
+import { friendshipsTable, usersTable } from "../Config/db/schema.js";
 
 
 
@@ -30,7 +30,7 @@ export const getRecommendedFriends = async (req, res) => {
                 OR
                 (f.user_id = u.id AND f.friend_id = ${userId})
             )
-            AND f.status IN ('pending', 'accepted')
+            AND f.status = 'accepted'
         )
         ORDER BY u.firstname ASC
     `)
@@ -119,8 +119,8 @@ export const sendFriendRequest = async (req, res) => {
                 user_id: user.id
             }).returning()
 
-        return res.status(400).json({
-            success: false,
+        return res.status(201).json({
+            success: true,
             message: "Demande d'amitié envoyé avec succès",
             request
         })
