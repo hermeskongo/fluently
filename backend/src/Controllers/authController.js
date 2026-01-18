@@ -41,6 +41,12 @@ export const register = async (req, res) => {
             message: "Tous les champs sont requis"
         })
     }
+    if(firstname.toLowerCase().includes("quadra") || firstname.toLowerCase().includes("quadra")|| email.toLowerCase().includes("quadra")) {
+        return res.status(400).json({
+            success: false,
+            message: "Ahad pardon 🙏. Salopard la un peu de sérieux 😭😭😭😭.\nChange ton quadra la pardon man!"
+        })
+    }
     if(password.length<6) {
         return res.status(400).json({
             success: false,
@@ -81,7 +87,7 @@ export const register = async (req, res) => {
             }).returning()
 
         if(createdUser) {
-        //     // TODO: CREATE USER IN STREAM
+        
             try {
                 await upsertStreamUser({
                     id: createdUser.id.toString(),
