@@ -57,3 +57,23 @@ export const onboardUser = async (data) => {
     const res = await axiosInstance.post(API_PATHS.AUTH.ONBOARD, data)
     return res.data
 }
+
+export const getFriends = async () => {
+    const res = await axiosInstance.get(API_PATHS.USERS.MY_FRIENDS)
+    return res.data
+}
+
+export const getRecommendedUsers = async () => {
+    const res = await axiosInstance.get(API_PATHS.USERS.GET_RECOMMENDED_FRIENDS)
+    return res.data
+}
+
+export const getOutGoingFriendReqs = async () => {
+    const res = await axiosInstance.get(API_PATHS.USERS.GET_OUT_GOING_FRIEND_REQUESTS)
+    return res.data
+}
+
+export const sendFriendRequest = async (user_id) => {
+    const res = await axiosInstance.post(API_PATHS.USERS.SEND_FRIEND_REQUEST, {friend_id: user_id})
+    return res.data
+}

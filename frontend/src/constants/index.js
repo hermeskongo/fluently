@@ -195,7 +195,8 @@ export const LANGUAGE_TO_FLAG = {
   italian: "it",
   turkish: "tr",
   dutch: "nl",
-  moore: "bf"
+  moore: "bf",
+  darija: "ma"
 };
 
 // Liste de belles couleurs (excluant noir et blanc)
