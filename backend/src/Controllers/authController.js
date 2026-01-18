@@ -81,7 +81,7 @@ export const register = async (req, res) => {
             }).returning()
 
         if(createdUser) {
-        //     // TODO: CREATE USER IN STREAM
+        
             try {
                 await upsertStreamUser({
                     id: createdUser.id.toString(),
