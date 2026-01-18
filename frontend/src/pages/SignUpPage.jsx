@@ -34,6 +34,11 @@ export default function SignUpPage() {
     e.preventDefault()
     signupMutation(signUpData);
   }
+
+  function handleTermsAndConditions() {
+    alert("Ne vous partagez pas de trucs compremettant😅 ! \nLes conversations ne sont pas chiffrés de bout en bout donc lisables par autre que vous 👀. En vous inscrivant vous accepté les conditions d'utilisations et les termes !")
+  }
+
   return (
     <AuthLayout>
           <div className="mb-4 flex items-center justify-start gap-3">
@@ -62,8 +67,8 @@ export default function SignUpPage() {
                     <input type="checkbox" className='checkbox checkbox-sm' required/>
                     <span className='text-xs leading-tight'>
                       J'accepte{" "}
-                      <span className='text-primary hover:underline'>les termes </span> et{" "}
-                      <span className='text-primary hover:underline'>les conditions</span>
+                      <span className='text-primary hover:underline' onClick={handleTermsAndConditions}>les termes </span> et{" "}
+                      <span className='text-primary hover:underline' onClick={handleTermsAndConditions}>les conditions</span>
                     </span>
                   </label>
                 </div>
@@ -75,7 +80,7 @@ export default function SignUpPage() {
               >{isPending ?
                   ( <> <span className="loading loading-spinner loading-xs"></span> Loading... </> )
                     :
-                  ( "Create Account" )
+                  ( "Créer un compte" )
               }
               </button>
               <p className='text-xs text-center'>

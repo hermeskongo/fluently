@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
+import { ArrowLeft } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { StreamChat } from "stream-chat"
 import {
   Channel,
@@ -21,6 +22,7 @@ import { getStreamToken } from '../lib/api'
 export const ChatPage = () => {
   const { id: tardgetUserId } = useParams()
   const { authUser } = useAuth()
+  const navigate = useNavigate()
 
   const STREAM_API_KEY = import.meta.env.VITE_STREAM_API_KEY
 
@@ -106,8 +108,9 @@ export const ChatPage = () => {
   return (
     <div className="h-[93vh]">
       <Chat client={chatClient}>
+            <ArrowLeft className='text-primary hover:cursor-pointer my-2 ml-3' onClick={() => navigate(-1)}/>
         <Channel channel={channel}>
-          <div className="w-full relative">
+          <div className="w-full relative pl-3">
             <CallButton handleVideoCall={handleVideoCall} />
             <Window>
               <ChannelHeader />

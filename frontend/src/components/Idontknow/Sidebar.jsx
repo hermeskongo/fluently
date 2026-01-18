@@ -1,5 +1,5 @@
 import { BellIcon, Globe, HomeIcon, UsersIcon } from 'lucide-react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 import { SidebarLink } from './SidebarLink'
 
@@ -10,16 +10,16 @@ export const Sidebar = () => {
 
     return (
         <aside className='w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col h-screen sticky top-0'>
-            <div className="mb-4 flex items-center justify-center gap-3 my-3">
+            <Link to={"/"} className="mb-4 flex items-center justify-center gap-3 my-3">
                 <Globe className="size-9 text-primary" />
                 <span className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
                     Fluently
                 </span>
-            </div>
+            </Link>
             <nav className='flex-1 p-4 space-y-1'>
-                <SidebarLink name="Accueil" to={"/"} currentPath={currentPath} Icon={HomeIcon}/>
-                <SidebarLink name="Amis" to={"/friends"} currentPath={currentPath} Icon={UsersIcon}/>
-                <SidebarLink name="Notifications" to={"/notifications"} currentPath={currentPath} Icon={BellIcon}/>
+                <SidebarLink name="Accueil" to={"/"} currentPath={currentPath} Icon={HomeIcon} />
+                <SidebarLink name="Amis" to={"/friends"} currentPath={currentPath} Icon={UsersIcon} />
+                <SidebarLink name="Notifications" to={"/notifications"} currentPath={currentPath} Icon={BellIcon} />
             </nav>
             {/*USER PROFILE SECTION */}
             <div className='mt-auto p-4'>
