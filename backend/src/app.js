@@ -19,7 +19,7 @@ testDrizzle()
 // Restriction origin middleware
 // Uniquement si on est en production
 
-if (process.env.NODE_ENV === production) {
+if (process.env.NODE_ENV === "production") {
     const restrictToOrigin = (req, res, next) => {
         // récuperation de l'origine de l'appel
         const origin = req.headers.origin
