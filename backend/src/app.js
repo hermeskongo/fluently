@@ -19,12 +19,8 @@ testDrizzle()
 // Restriction origin middleware
 // Uniquement si on est en production
 
-if (process.env.NODE_ENV === "production") {
-
 
 app
-    .use(express.urlencoded({ extended: true }))
-    .use(cookieParser())
     .use(cors({
         origin: [
             "http://localhost:5174",
@@ -34,6 +30,8 @@ app
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true
     }))
+    .use(express.urlencoded({ extended: true }))
+    .use(cookieParser())
 
 app.get('/', (req, res) => res.send("API WORK"))
 
