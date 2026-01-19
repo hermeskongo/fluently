@@ -1,5 +1,5 @@
 import express from "express";
-import {getUser, login, logout, onboard, register} from "../Controllers/authController.js";
+import {getUser, login, logout, onboard, register} from "../Controllers/auth.controller.js";
 import {isAuthenticated} from "../Middlewares/auth.middleware.js";
 
 export const authRoutes = express.Router()
