@@ -95,9 +95,7 @@ export const ChatPage = () => {
   async function handleVideoCall() {
     if (channel) {
       const callUrl = `${window.location.origin}/call/${channel.id}/${tardgetUserId}`
-      channel.sendMessage({
-        text: `Rejoins moi pour un appel vidéo en cliquant sur ce lien !: ${callUrl}`
-      })
+      navigate(`/call/${channel.id}/${tardgetUserId}`)
       toast.success("Lien d'appel créé avec succès !🎉")
     }
 
