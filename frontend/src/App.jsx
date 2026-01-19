@@ -13,6 +13,7 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import { useThemeStore } from './store/useThemeStore.jsx';
 
 export const  App = () => {
+  console.log("All env vars:", import.meta.env);
 
   const {authUser, isLoading, error} = useAuth()
 
