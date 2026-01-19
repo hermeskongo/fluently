@@ -31,17 +31,18 @@ export const API_PATHS = {
 //============= Mutation for our differents endpoints in order to use it with React-Query================
 
 
-export const signup =  async (signUpData) => {
+export const signup = async (signUpData) => {
     const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, signUpData)
     return response.data
 }
 
-export const login =  async (data) => {
+export const login = async (data) => {
     const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, data)
+    console.log(response)
     return response.data
 }
 
-export const logout =  async () => {
+export const logout = async () => {
     const response = await axiosInstance.post(API_PATHS.AUTH.LOGOUT)
     return response.data
 }
@@ -77,12 +78,12 @@ export const getOutGoingFriendReqs = async () => {
 }
 
 export const sendFriendRequest = async (user_id) => {
-    const res = await axiosInstance.post(API_PATHS.USERS.SEND_FRIEND_REQUEST, {friend_id: user_id})
+    const res = await axiosInstance.post(API_PATHS.USERS.SEND_FRIEND_REQUEST, { friend_id: user_id })
     return res.data
 }
 
 export const getFriendRequests = async () => {
-    try {    
+    try {
         const res = await axiosInstance.get(API_PATHS.USERS.GET_FRIEND_REQUESTS)
         return res.data
     } catch (error) {
@@ -92,8 +93,8 @@ export const getFriendRequests = async () => {
 }
 
 export const acceptFriendRequest = async (friendshipId) => {
-    try {    
-        const res = await axiosInstance.put(API_PATHS.USERS.ACCEPT_FRIEND_REQUEST, {friendshipId})
+    try {
+        const res = await axiosInstance.put(API_PATHS.USERS.ACCEPT_FRIEND_REQUEST, { friendshipId })
         return res.data?.friends
     } catch (error) {
         console.log("Error mutation accept friend request")
@@ -104,7 +105,7 @@ export const acceptFriendRequest = async (friendshipId) => {
 
 
 export const getStreamToken = async () => {
-    try {    
+    try {
         const res = await axiosInstance.get(API_PATHS.CHAT.GET_STREAM_TOKEN)
         return res.data
     } catch (error) {
