@@ -29,6 +29,8 @@ app
         credentials: true
     }))
 
+app.get('/', (req,res) => res.send("API WORK"))
+
 app
     .use(express.json())
     .use('/api/auth', authRoutes)
