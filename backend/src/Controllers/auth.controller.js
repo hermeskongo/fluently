@@ -175,7 +175,12 @@ export const login = async (req, res) => {
 
 // Déconnexion de l'utilisateur
 export const logout = async (req, res) => {
-    res.clearCookie("jwt")
+    res.clearCookie("jwt", {
+        httpOnly: true,
+        sameSite: "none",
+        secure: true,
+        path: "/" // Assure-toi que le path correspond (par défaut c'est '/')
+    });
     return res.json({
         success: true,
         message: "Déconnexion réussie !"
