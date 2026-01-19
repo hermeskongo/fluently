@@ -6,5 +6,9 @@ console.log(import.meta.env.VITE_BACKEND_URL)
 
 export const axiosInstance = axios.create({
     baseURL: BACKEND_BASE_URL,
-    withCredentials: true
+    withCredentials: true,
+    headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+    }
 })
