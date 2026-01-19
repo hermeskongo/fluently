@@ -19,8 +19,8 @@
     "dev": "nodemon src/app.js",
     "start": "node src/app.js",
     "build": "npm run generate && npm run push",
-    "generate": "npx drizzle-kit generate --config=src/drizzle.config.ts",
-    "push": "npx drizzle-kit push --config=src/drizzle.config.ts"
+    "generate": "drizzle-kit generate --config=src/drizzle.config.ts",
+    "push": "drizzle-kit push --config=src/drizzle.config.ts"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
