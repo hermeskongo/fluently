@@ -28,10 +28,11 @@ if (process.env.NODE_ENV === "production") {
         }
         next()
     };
+    
+    app.use(restrictToOrigin())
 }
 
 app
-    .use(restrictToOrigin())
     .use(express.urlencoded({ extended: true }))
     .use(cookieParser())
     .use(cors({
