@@ -24,7 +24,7 @@ function createTokenAndSetCookie(payload, res) {
 
     res.cookie("jwt", token,{
         maxAge: expireIn,
-        sameSite: "none",
+        sameSite: "lax",
         httpOnly: true,
         secure: process.env.NODE_ENV === "production"
     })
