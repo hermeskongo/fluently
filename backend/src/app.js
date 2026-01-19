@@ -20,17 +20,7 @@ testDrizzle()
 // Uniquement si on est en production
 
 if (process.env.NODE_ENV === "production") {
-    const restrictToOrigin = (req, res, next) => {
-        // récuperation de l'origine de l'appel
-        const origin = req.headers.origin
-        if (origin !== "https://fluently-swart.vercel.app") {
-            return res.status(403).json({ message: "Accès refusé : Origine non autorisée" });
-        }
-        next()
-    };
-    
-    app.use(restrictToOrigin())
-}
+
 
 app
     .use(express.urlencoded({ extended: true }))
