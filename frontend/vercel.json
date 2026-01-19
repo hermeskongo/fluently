@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+    {
+        "source": "/api/v1/:path*",
+        "destination": "https://fluently-production-8011.up.railway.app/:path*"
+    },
+    {
+        "source": "/(.*)",
+        "destination": "/index.html"
+    }
+]
+}
