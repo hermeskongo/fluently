@@ -53,7 +53,7 @@ export const register = async (req, res) => {
             message: "Le mot de passe doit contenir au moins 6 caractères."
         })
     }
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
     if(!emailRegex.test(email)) {
         return res.status(400).json({
