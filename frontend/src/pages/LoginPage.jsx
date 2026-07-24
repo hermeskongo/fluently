@@ -33,8 +33,6 @@ export const LoginPage = () => {
     }
   })
 
-  console.log(error)
-  
   function handleSubmit(e) {
     e.preventDefault()
     loginMutation(loginData)

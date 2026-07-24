@@ -33,19 +33,16 @@ export const API_PATHS = {
 
 export const signup = async (signUpData) => {
     const response = await axiosInstance.post(API_PATHS.AUTH.REGISTER, signUpData)
-    console.log(response)
     return response.data
 }
 
 export const login = async (data) => {
     const response = await axiosInstance.post(API_PATHS.AUTH.LOGIN, data)
-    console.log(response)
     return response.data
 }
 
 export const logout = async () => {
     const response = await axiosInstance.post(API_PATHS.AUTH.LOGOUT)
-    console.log(response)
     return response.data
 }
 
@@ -54,38 +51,33 @@ export const getAuthUser = async () => {
         const res = await axiosInstance.get(API_PATHS.AUTH.GET_USER)
         return res.data
     } catch (error) {
-        console.log("Error on getting user")
+        console.error("Echec de la recuperation de l'utilisateur", error)
         return null
     }
 }
 
 export const onboardUser = async (data) => {
     const res = await axiosInstance.post(API_PATHS.AUTH.ONBOARD, data)
-    console.log(res)
     return res.data
 }
 
 export const getFriends = async () => {
     const res = await axiosInstance.get(API_PATHS.USERS.MY_FRIENDS)
-    console.log(res)
     return res.data
 }
 
 export const getRecommendedUsers = async () => {
     const res = await axiosInstance.get(API_PATHS.USERS.GET_RECOMMENDED_FRIENDS)
-    console.log(res)
     return res.data
 }
 
 export const getOutGoingFriendReqs = async () => {
     const res = await axiosInstance.get(API_PATHS.USERS.GET_OUT_GOING_FRIEND_REQUESTS)
-    console.log(res)
     return res.data
 }
 
 export const sendFriendRequest = async (user_id) => {
     const res = await axiosInstance.post(API_PATHS.USERS.SEND_FRIEND_REQUEST, { friend_id: user_id })
-    console.log(res)
     return res.data
 }
 
@@ -94,8 +86,7 @@ export const getFriendRequests = async () => {
         const res = await axiosInstance.get(API_PATHS.USERS.GET_FRIEND_REQUESTS)
         return res.data
     } catch (error) {
-        console.log("Error query get my friends requests")
-        console.log(error)
+        console.error("Echec du chargement des demandes d'ami", error)
         return null
     }
 }
@@ -105,8 +96,7 @@ export const acceptFriendRequest = async (friendshipId) => {
         const res = await axiosInstance.put(API_PATHS.USERS.ACCEPT_FRIEND_REQUEST, { friendshipId })
         return res.data?.friends
     } catch (error) {
-        console.log("Error mutation accept friend request")
-        console.log(error)
+        console.error("Echec de l'acceptation de la demande d'ami", error)
         return null
     }
 }
@@ -118,7 +108,7 @@ export const getStreamToken = async () => {
         const res = await axiosInstance.get(API_PATHS.CHAT.GET_STREAM_TOKEN)
         return res.data
     } catch (error) {
-        console.log("Error query: get stream token")
+        console.error("Echec de la recuperation du token Stream", error)
         return null
     }
 }

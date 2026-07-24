@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { CheckCircleIcon, MapIcon, UserPlusIcon, Users } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import toast from 'react-hot-toast'
 import { Link } from 'react-router-dom'
-import { FriendCard, getLanguageFlag } from '../components/Home/FriendCard'
+import { FriendCard } from '../components/Home/FriendCard'
+import { getLanguageFlag } from '../lib/languageFlag'
 import { NoFriendsFound } from '../components/Home/NofriendsFound'
 import { getFriends, getOutGoingFriendReqs, getRecommendedUsers, sendFriendRequest } from '../lib/api'
 import { capitalize, getFullName } from '../lib/help'
 
 export const HomePage = () => {
-  const [outGoingFriendsReqsIds, setOutGoingFriendsReqsIds] = useState(new Set());
   const queryClient = useQueryClient();
 
   // 1. Amis (sécurisé avec || [])
@@ -27,13 +27,13 @@ export const HomePage = () => {
   const recommendedUsers = recommendedUsersData?.recommendedFriends || [];
 
   // 3. Demandes envoyées
-  const { data: outGoingFriendsData, isLoading: loadingOutGoingFriendsReqs } = useQuery({
+  const { data: outGoingFriendsData } = useQuery({
     queryKey: ["outGoingFriendsReqs"],
     queryFn: getOutGoingFriendReqs
   });
-  const outGoingFriendsReqs = outGoingFriendsData?.requests || [];
 
-  const { mutate: sendFriendRequestMutation, isPending, error } = useMutation({
+
+  const { mutate: sendFriendRequestMutation, isPending } = useMutation({
     mutationFn: sendFriendRequest,
     onSuccess: () => {
       toast.success("Demande envoyée !");
@@ -41,16 +41,12 @@ export const HomePage = () => {
     }
   });
 
-  // Correction de la boucle useEffect
-  useEffect(() => {
-    const outGoingIds = new Set();
-    if (Array.isArray(outGoingFriendsReqs)) {
-      outGoingFriendsReqs.forEach((req) => {
-        if (req.friend_id) outGoingIds.add(req.friend_id);
-      });
-    }
-    setOutGoingFriendsReqsIds(outGoingIds);
-  }, [outGoingFriendsReqs]);
+  // Etat derive des donnees serveur : calcule au rendu plutot que synchronise
+  // par un effet, ce qui evitait un rendu en cascade a chaque refetch.
+  const outGoingFriendsReqsIds = useMemo(
+    () => new Set((outGoingFriendsData?.requests ?? []).map((req) => req.friend_id).filter(Boolean)),
+    [outGoingFriendsData],
+  );
 
   return (
     <div className='p-4 sm:p-6 lg:p-8 h-full'> {/* h-full pour remplir le layout */}

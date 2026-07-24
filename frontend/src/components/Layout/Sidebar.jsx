@@ -4,7 +4,7 @@ import { useAuth } from '../../hooks/useAuth'
 import { SidebarLink } from './SidebarLink'
 
 export const Sidebar = () => {
-    const { authUser, isLoading } = useAuth()
+    const { authUser } = useAuth()
     const location = useLocation()
     const currentPath = location.pathname
 

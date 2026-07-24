@@ -31,7 +31,7 @@ export const ChatPage = () => {
   const [loading, setLoading] = useState(true)
 
 
-  const { data: tokenData, error } = useQuery({
+  const { data: tokenData } = useQuery({
     queryKey: ["streamToken"],
     queryFn: getStreamToken,
     enabled: !!authUser // Query work until authUser is available
@@ -58,7 +58,6 @@ export const ChatPage = () => {
     const initChat = async () => {
       if (!token || !authUser) return
       try {
-        console.log("Initializing stream chat client...")
         const client = StreamChat.getInstance(STREAM_API_KEY)
         await client.connectUser({
           id: authUser.id.toString(),

@@ -1,6 +1,6 @@
 import { Toaster } from "react-hot-toast";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { GlobalLayout } from './components/Idontknow/GlobalLayout.jsx';
+import { GlobalLayout } from './components/Layout/GlobalLayout.jsx';
 import { PageLoader } from './components/UI/PageLoader.jsx';
 import { useAuth } from "./hooks/useAuth.js";
 import { CallPage } from "./pages/CallPage.jsx";
@@ -12,10 +12,8 @@ import { OnboardingPage } from "./pages/OnboardingPage.jsx";
 import SignUpPage from "./pages/SignUpPage.jsx";
 import { useThemeStore } from './store/useThemeStore.jsx';
 
-export const  App = () => {
-  console.log("All env vars:", import.meta.env);
-
-  const {authUser, isLoading, error} = useAuth()
+export const App = () => {
+  const { authUser, isLoading } = useAuth()
 
   const { theme } = useThemeStore()
 

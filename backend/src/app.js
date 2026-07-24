@@ -2,13 +2,10 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import 'dotenv/config';
 import express from "express";
-import path from "path";
 import { testDrizzle } from "./Config/db/drizzle.js";
 import { authRoutes } from "./Routes/auth.routes.js";
 import { chatRoutes } from "./Routes/chat.routes.js";
 import { userRoutes } from "./Routes/user.routes.js";
-
-const __dirname = path.resolve()
 
 const app = express()
 
@@ -16,40 +13,30 @@ const port = process.env.PORT
 
 testDrizzle()
 
-// Restriction origin middleware
-// Uniquement si on est en production
-
+// Le front est servi separement (Vercel) : on autorise explicitement ses origines.
+const allowedOrigins = [
+    "http://localhost:5173",
+    "http://localhost:5174",
+    "https://fluently-swart.vercel.app",
+]
 
 app
     .use(cors({
-        origin: [
-            "http://localhost:5174",
-            "http://localhost:5173",
-            "https://fluently-swart.vercel.app"
-        ],
+        origin: allowedOrigins,
         methods: ["GET", "POST", "PUT", "DELETE"],
         credentials: true
     }))
     .use(express.urlencoded({ extended: true }))
     .use(cookieParser())
 
-app.get('/', (req, res) => res.send("API WORK"))
+// Sonde de disponibilite (utilisee par l'hebergeur pour le health check)
+app.get('/', (req, res) => res.json({ status: "ok", service: "fluently-api" }))
 
 app
     .use(express.json())
     .use('/api/auth', authRoutes)
     .use('/api/users', userRoutes)
     .use('/api/chat', chatRoutes)
-
-// if (process.env.PROD === "production") {
-//     app.use(express.static(path.join(__dirname, "../frontend/dist")));
-//
-//     app.get("/.\\*/", (req, res) => {
-//         res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
-//     });
-//
-// }
-
 
 app.listen(port, () => {
     console.log(`Server is running on: http://localhost:${port}`)

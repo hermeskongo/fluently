@@ -12,7 +12,7 @@ export const NotificationsPage = () => {
   
   const queryClient = useQueryClient()
 
-  const {data: friendRequests, isLoading, error} = useQuery({
+  const {data: friendRequests, isLoading} = useQuery({
     queryKey: ["friendRequests"],
     queryFn: getFriendRequests
   })

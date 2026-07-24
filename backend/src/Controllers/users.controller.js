@@ -107,7 +107,7 @@ export const sendFriendRequest = async (req, res) => {
                     })
 
                 default:
-                    console.log("Erreur switch case < friendships | status>")
+                    console.error("Statut de demande d'ami inattendu")
                     break
             }
         }

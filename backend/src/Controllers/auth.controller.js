@@ -88,9 +88,8 @@ export const register = async (req, res) => {
                     name: `${createdUser.lastname} ${createdUser.firstname}`,
                     image: createdUser.picture || ""
                 })
-                console.log("User stream created successfully !")
             } catch (e) {
-                console.log("Error creating stream user")
+                console.error("Echec de la creation de l'utilisateur Stream", e)
             }
 
             // Authentification immédiate de l'utilisateur dès son inscription
@@ -244,9 +243,8 @@ export const onboard = async (req, res) => {
                 name: `${updatedUser.lastname} ${updatedUser.firstname}`,
                 image: updatedUser.picture || ""
             })
-            console.log("User stream updated after onboarding successfully !")
         } catch (e) {
-            console.log("Error updating stream user")
+            console.error("Echec de la mise a jour de l'utilisateur Stream", e)
         }
 
         return res.json({

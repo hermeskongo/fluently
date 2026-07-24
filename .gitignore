@@ -1,6 +1,23 @@
-.idea
-.vscode
-backend/node_modules
-backend/.env
-node_modules
+# Dependances
+node_modules/
+**/node_modules/
+
+# Variables d'environnement
 .env
+.env.local
+**/.env
+!**/.env.example
+
+# Builds
+dist/
+**/dist/
+.vite/
+
+# Editeurs
+.idea/
+.vscode/
+*.iml
+
+# Systeme
+.DS_Store
+*.log

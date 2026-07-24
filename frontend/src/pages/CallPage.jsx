@@ -41,7 +41,6 @@ export const CallPage = () => {
         await call.join({ create: true, audio: true, video: true });
         await call.camera.enable();
 
-        console.log("Appel vidéo rejoint avec succès !");
 
         setCallClient(client);
         setCall(call);
@@ -76,9 +75,8 @@ export const CallPage = () => {
 
 export const CallContent = ({ chatId }) => {
   const call = useCall();
-  const { useCallCallingState, useParticipantCount } = useCallStateHooks();
+  const { useCallCallingState } = useCallStateHooks();
   const callingState = useCallCallingState();
-  const participantCount = useParticipantCount();
   const navigate = useNavigate();
 
   if (callingState === CallingState.LEFT) {
