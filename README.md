@@ -12,6 +12,20 @@ Application full-stack JavaScript — React + Express + PostgreSQL, avec chat et
 
 ## Aperçu
 
+**Accueil — partenaires recommandés selon les langues**
+
+Les suggestions sont calculées à partir du croisement langue maternelle / langue apprise : Hermès parle français et apprend le japonais, on lui propose donc des natifs japonais.
+
+![Accueil avec la liste d'amis et les partenaires recommandés](screenshots/home.png)
+
+**Notifications — demandes d'ami reçues et acceptées**
+
+![Page de notifications](screenshots/notifications.png)
+
+| Onboarding | Sélecteur de thèmes |
+|---|---|
+| ![Formulaire d'onboarding](screenshots/onboarding.png) | ![Liste des thèmes disponibles](screenshots/themes.png) |
+
 | Connexion | Inscription |
 |---|---|
 | ![Écran de connexion](screenshots/login.png) | ![Écran d'inscription](screenshots/signup.png) |

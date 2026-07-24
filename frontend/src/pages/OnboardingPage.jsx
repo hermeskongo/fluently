@@ -58,7 +58,7 @@ export const OnboardingPage = () => {
     const newAvatarUrl = `https://api.dicebear.com/9.x/lorelei/svg?seed=${seed}&backgroundColor=${randomColor}&radius=50`;
     setFormState(prev => ({ ...prev, picture: newAvatarUrl }));
 
-    toast.success("Photo de profile générer !")
+    toast.success("Photo de profil générée !")
   };
 
   return (
@@ -89,7 +89,7 @@ export const OnboardingPage = () => {
               className='btn btn-accent flex items-center justify-between my-3'
             >
               <Shuffle/>
-              Génerer une photo aléatoirement !
+              Générer une photo aléatoirement !
             </button>
           </div>
 
@@ -129,7 +129,7 @@ export const OnboardingPage = () => {
                 value={formState.nativeLanguage}
                 onChange={handleInputChange}
                 id={"native"}
-                label={"Langue maternel"}
+                label={"Langue maternelle"}
               />
               <Select 
                 name="learningLanguage"
