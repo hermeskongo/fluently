@@ -15,8 +15,8 @@ export default function AuthLayout({children}) {
               <img src="/video.png" alt="SignUpPage illustration" />
             </div>
             <div className='text-center space-y-3 mt-6'>
-              <h2 className='text-xl font-semibold'>Connect with language partner Worlwide</h2>
-              <p className="opacity-70 text-sm">Pratice conversations, make friends and improve you language skills together</p>
+              <h2 className='text-xl font-semibold'>Connect with language partners worldwide</h2>
+              <p className="opacity-70 text-sm">Practice conversations, make friends and improve your language skills together</p>
             </div>
           </div>
         </div>

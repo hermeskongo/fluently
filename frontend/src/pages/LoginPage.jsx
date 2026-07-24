@@ -50,7 +50,7 @@ export const LoginPage = () => {
           <div className='w-full'>
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold">Bon retour parmis nous !</h2>
+                <h2 className="text-xl font-semibold">Bon retour parmi nous !</h2>
                 <p className='text-sm opacity-70 italic'>Nouez des relations tout en apprenant une nouvelle langue</p>
               </div>
               {/* DISPLAY ERROR MESSAGE IF ANY */}
@@ -58,8 +58,8 @@ export const LoginPage = () => {
                 <span>{error?.response?.data?.message}</span>
               </div>}
               <div className='mt-8 space-y-3'>
-                <Input label="E-mail" name="email" value={loginData.email} setValue={handleChange}/>
-                <Input label="Mot de passe" type='password' name="password" value={loginData.password} setValue={handleChange}/>
+                <Input label="E-mail" name="email" placeholder="jean.dupont@exemple.com" value={loginData.email} setValue={handleChange}/>
+                <Input label="Mot de passe" type='password' name="password" placeholder="Au moins 6 caractères" value={loginData.password} setValue={handleChange}/>
               </div>
               <button 
                 type="submit"

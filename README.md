@@ -4,7 +4,17 @@
 
 L'idée est simple : je parle français et j'apprends l'espagnol, tu parles espagnol et tu apprends le français — l'algorithme de recommandation nous met en relation, et on progresse tous les deux.
 
-🔗 **[Démo en ligne](https://fluently-swart.vercel.app)** · Application full-stack JavaScript (React + Express + PostgreSQL)
+Application full-stack JavaScript — React + Express + PostgreSQL, avec chat et visio temps réel.
+
+> **Démo en ligne** — l'instance de démonstration est actuellement hors ligne (l'hébergement de l'API a expiré). Le projet s'installe en local en quelques minutes, voir [Installation](#installation).
+
+---
+
+## Aperçu
+
+| Connexion | Inscription |
+|---|---|
+| ![Écran de connexion](screenshots/login.png) | ![Écran d'inscription](screenshots/signup.png) |
 
 ---
 

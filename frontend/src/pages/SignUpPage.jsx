@@ -58,10 +58,10 @@ export default function SignUpPage() {
                 <span>{error?.response?.data?.message}</span>
               </div>}
               <div className='mt-8 space-y-3'>
-                <Input label="Nom" name="lastname" value={signUpData.lastname} setValue={handleChange}/>
-                <Input label="Prénom" name="firstname" value={signUpData.firstname} setValue={handleChange}/>
-                <Input label="E-mail" name="email" value={signUpData.email} setValue={handleChange}/>
-                <Input label="Mot de passe" type='password' name="password" value={signUpData.password} setValue={handleChange}/>
+                <Input label="Nom" name="lastname" placeholder="Dupont" value={signUpData.lastname} setValue={handleChange}/>
+                <Input label="Prénom" name="firstname" placeholder="Jean" value={signUpData.firstname} setValue={handleChange}/>
+                <Input label="E-mail" name="email" placeholder="jean.dupont@exemple.com" value={signUpData.email} setValue={handleChange}/>
+                <Input label="Mot de passe" type='password' name="password" placeholder="Au moins 6 caractères" value={signUpData.password} setValue={handleChange}/>
                 <div className='form-control'>
                   <label className='label cursor-pointer justify-start gap-2'>
                     <input type="checkbox" className='checkbox checkbox-sm' required/>
