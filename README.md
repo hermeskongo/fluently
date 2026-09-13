@@ -6,7 +6,7 @@ L'idée est simple : je parle français et j'apprends l'espagnol, tu parles espa
 
 Application full-stack JavaScript — React + Express + PostgreSQL, avec chat et visio temps réel.
 
-> **Démo en ligne** — l'instance de démonstration est actuellement hors ligne (l'hébergement de l'API a expiré). Le projet s'installe en local en quelques minutes, voir [Installation](#installation).
+> **Démo publique suspendue** — le frontend se charge mais l'API et la base sont coupées (hébergement arrêté) : l'application n'est pas utilisable en ligne pour l'instant. Le projet s'installe en local en quelques minutes, voir [Installation](#installation).
 
 ---
 
